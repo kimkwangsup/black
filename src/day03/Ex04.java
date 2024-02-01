@@ -8,11 +8,25 @@ package day03;
  */
 public class Ex04 {
 	public static void main(String[] args) {
-		int no1 = (int)(Math.random() * ((999 + 100 - 1) + 100));
+		/*
+		 int no = (int)(Math.random() * (999 - 100 + 1) + 100);
+		 
 		
-		int no2 = 100 * (no1 / 100);
+		int num = 100 * (no / 100);
 		
-		System.out.println(no2);
+		
+		System.out.println("랜덤 3자리 숫자 : " + no);
+		System.out.println("백자리 미만은 버리는 백단위 : " + num);
+	*/
+	
+	int no = (int)(Math.random() * (999 - 100 + 1) + 100);
+	
+	int result = no - ( no % 100 );
+	
+	System.out.println(no + " 의 100 단위 숫자 : " + result);
+	
+	
+	
 	}
 
 }

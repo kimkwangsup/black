@@ -11,14 +11,16 @@ package day03;
 public class Ex03 {
 	public static void main(String[] args) {
 			
-		int down =(int)(Math.random() * ((10 - 1 + 1) + 1));
-		System.out.println("밑변 : " + down);
+		int up =(int)(Math.random() * (10 - 1 + 1) + 1);
+		// System.out.println("밑변 : " + up);
 		
-		int up =(int)(Math.random() * ((10 - 1 + 1) + 1));
-		System.out.println("높이 : " + up);
+		int down =(int)(Math.random() * (10 - 1 + 1) + 1);
+		// System.out.println("높이 : " + down);
 		
+		double area = up * down / 2.0;
 		
-		System.out.println("넓이 : " + ((up * down) / 2.0));
+		System.out.printf("밑변이 %2d 이고 높이가 %2d 인 삼각형의 넓이는 %4.1f 입니다. ", up, down, area);
+		// System.out.println("넓이 : " + ((up * down) / 2.0));
 		
 		
 	
