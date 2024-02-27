@@ -106,6 +106,7 @@ public class Test04_ArrayList {
 			int total = (int) l.get(4);
 			int lank = (int)l.get(6);
 			
+			
 			for(int j = 0 ; j < list.size(); j++) {
 				ArrayList l2 = (ArrayList) list.get(j);
 				int ttl = (int)l2.get(4);
@@ -117,12 +118,36 @@ public class Test04_ArrayList {
 			l.set(6, lank);
 		}
 		// 결과 출력
+		
+		// 정렬하기
+		for(int i = 0 ; i < list.size() - 1 ; i++) {
+			for(int j = i + 1 ; j < list.size() ; j++) {
+				// 현재 방 데이터 꺼내기
+				ArrayList pre = (ArrayList) list.get(i);
+				ArrayList next = (ArrayList) list.get(j);
+				// 이름, 국어, 영어, 수학, 총점, 평균, 순위
+				
+				int pre_rank = (int) pre.get(6);
+				int next_rank = (int) next.get(6);
+				if(pre_rank > next_rank) {
+					// 임시 주소 기억 변수
+					ArrayList tmp = pre;
+					/*
+					// 변수에 기억된 주소만 바꾸고 리스트에 기억된 주소는 바꾸지 않게 되므로
+					// 이렇게 처리하면 안된다.
+					pre = next;
+					next = tmp;
+					*/
+					list.set(i, next);
+					list.set(j, tmp);
+				}
+			}
+		}
 		System.out.println(list);
 		System.out.println();
 		for(Object o : list) {
 			System.out.println(o);
 		}
-		
 	}
 
 	
