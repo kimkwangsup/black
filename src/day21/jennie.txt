@@ -1,0 +1,5 @@
+name=Jennie
+age=28
+gen=F
+tel=010-1212-1212
+addr=Seoul
