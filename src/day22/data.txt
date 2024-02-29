@@ -1,0 +1,1 @@
+a newly created {@code String} object so that it represents an empty character sequence.
