@@ -311,6 +311,36 @@ public class BoardDao {
 		// 반환해주고
 		
 		return cnt;
+	} 
+	
+	// 게시글 저장 데이터베이스 작업 전담 처리함수
+	public int addBoard(String title, String body, int mno) {
+		// 할일
+		// 반환값 변수
+		int cnt = 0;
+		
+		// 커넥션 꺼내오고
+		con = db.getCon();
+		// 질의명령 꺼내오고
+		sql = BoardSQL.getSQL(BoardSQL.ADD_BOARD);
+		// 명령전달도구 만들고
+		pstmt = db.getPstmt(sql, con);
+		try {
+			// 질의명령 완성하고
+			pstmt.setString(1, title);
+			pstmt.setString(2, body);
+			pstmt.setInt(3, mno);
+			// 질의명령 보내고 결과받고
+			cnt = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(pstmt);
+			db.close(con);
+		}
+		// 결과 반환하고
+		return cnt;
+		
 	}
 	
 }

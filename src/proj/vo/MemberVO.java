@@ -4,6 +4,7 @@ package proj.vo;
 	이 클래스는 회원 한 명의 정보를 기억하는 용도의 클래스
  */
 import java.util.Date;
+import java.text.*;
 import java.sql.*;
 public class MemberVO {
 	private int mno, ano;
@@ -71,6 +72,12 @@ public class MemberVO {
 	public void setSdate(String sdate) {
 		this.sdate = sdate;
 	}
+	public void setSdate() {
+		SimpleDateFormat form1 = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat form2 = new SimpleDateFormat("HH:mm:ss");
+		
+		sdate = form1.format(jDate) + form2.format(jTime);
+	}
 	public Date getjDate() {
 		return jDate;
 	}
@@ -82,5 +89,6 @@ public class MemberVO {
 	}
 	public void setjTime(Time jTime) {
 		this.jTime = jTime;
+		setSdate();
 	}
 }

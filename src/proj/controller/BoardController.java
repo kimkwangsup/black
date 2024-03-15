@@ -37,7 +37,7 @@ public class BoardController {
 				editBody();
 				break;
 			case "c": // 입력기능
-				delBoard();
+				writeBoard();
 				break;
 			case "d": // 삭제기능
 				delBoard();
@@ -182,7 +182,7 @@ public class BoardController {
 		// 메세지출력
 		System.out.println("수정 내용 입력 : ");
 		// 입력받고
-		String rebody = sc.nextLine();
+		String rebody = sc.nextLine(); 
 		// 입력된 내용 데이터베이스에 입력
 		int cnt = bDao.editBody(bno, rebody);
 		if(cnt == 1) {
@@ -208,8 +208,13 @@ public class BoardController {
 			// 메시지
 			while(true) {
 				System.out.print("삭제할 글번호를 입력하세요 : ");
+				String tmp = sc.nextLine();
 				try {
-					bno = Integer.parseInt(sc.nextLine());
+					if(tmp.equals("q")) {
+						return;
+					} else {
+						bno = Integer.parseInt(tmp);
+					}
 				}catch(Exception e) {
 					System.out.println("잘못된 입력입니다.");
 					continue;
@@ -223,8 +228,44 @@ public class BoardController {
 			// 결과 출력
 			if(cnt != 1) {
 				System.out.println("삭제작업이 실패했습니다.");
-			} 
+			} else {
+				System.out.println("게시글 삭제 완료");
+			}
 		}
+	}
+	// 게시글 작성 기능 전담 함수
+	public void writeBoard() {
+		// 할일
+		// 변수 준비
+		String title = "";
+		String body = "";
+		while(true) {
+			// 1. 제목 입력 메세지 출력
+			System.out.print("제목 입력 : ");
+			// 2. 제목 입력받고
+			title = sc.nextLine();
+			if(title == null || title.length() == 0) continue;
+			break;
+		}
+		while(true) {
+			// 3. 본문 입력 메세지
+			System.out.println("본문 내용 입력 : ");
+			// 4. 본문 입력
+			body = sc.nextLine();
+			if(body == null || body.length() == 0) continue;
+			break;
+		}
+		// 5. 데이터베이스 작업하고 결과받고
+		int cnt = bDao.addBoard(title, body, mno);
+		// 6. 결과 출력해주고
+		if(cnt == 1) {
+			// 입력 작업에 성공한 경우
+			System.out.println("게시글 업로드 완료");
+		}else {
+			// 입력 작업에 실패한 경우
+			System.out.println("업로드 실패");
+		}
+		// 7. 종료
 	}
 	
 	public static void main(String[] args) {

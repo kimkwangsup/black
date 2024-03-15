@@ -1,7 +1,7 @@
 package proj.sql;
 
 import java.text.*;
-import java.util.Date;
+import java.util.*;
 
 public class FormatClass {
 
@@ -69,8 +69,38 @@ public class FormatClass {
 					s		: 초(0 ~ 59)
 					
 			3. ChoiceFormat
-			
+			==> switch - case 등을 이용해야 하는 경우에 
+				이것을 간소화시키기 위한 방법
+				
+				생성방법 ]
+					ChoiceFormat(double[] limits, String[] formats)
+					
+						double[] limits  : 치환된 범위
+						String[] formats : 치환할 문자 
+				
 			4. MessageFormat
+			==> 특정 문자열에 특정 위치의 내용만 변경되는 경우
+				문자열 전체를 다시 만들지 않고
+				변경되는 내용만 변화시켜서
+				문자열을 만들어주는 클래스
+				
+				예 ]
+				 
+					insert 명령의 경우
+					
+					"INSERT INTO board VALUES( brdSeq.NEXTVAL, '첫번째', '첫번째 내용') "
+					"INSERT INTO board VALUES( brdSeq.NEXTVAL, '두번째', '두번째 내용') "
+					"INSERT INTO board VALUES( brdSeq.NEXTVAL, '세번째', '세번째 내용') "
+					
+					자바에서 처리를 하려면
+					매번 다시 문자열을 만들어야 하는데 불편함이 있다.
+					이것을 해결해주는 클래스가 MessageFormat 클래스이다.
+					
+					참고함수 ]
+						parse(String source)
+						==> 주어진 문자열 중에서 실제 변화되는 데이터 부분만 
+							알아내는 함수
+					
 	 */
 	public FormatClass() {
 		DecimalFormat form = new DecimalFormat("00,000,000.00");
@@ -82,6 +112,69 @@ public class FormatClass {
 		String snow = form2.format(new Date());
 		
 		System.out.println("현재시간 : " + snow);
+		
+		// ChoiceFormat
+		double[] limits = {0, 60, 70, 80, 90, 1001};
+		/*
+			주의사항 ]
+				limits를 만들 때
+				반드시 오름차순 정렬이 되어야 한다.
+				
+				formats를 만들때는
+				반드시 limits 의 갯수와 동일한 갯수로 만들어야 한다.
+		 */
+		String[] formats = {"F", "D", "C", "B", "A", "S"};
+		
+		String pattern = "0#F|60#D|70#C|80#B|90#A|1000<S";
+		/*
+			60#D   ==> " <= " 의 의미 : 60보다 크거나 같으면 D
+			1000<S ==> " < " 의 의미  : 1000보다 크면 S
+		 */
+		ChoiceFormat cForm = new ChoiceFormat(limits, formats);
+		ChoiceFormat cForm2 = new ChoiceFormat(pattern);
+		// 
+		int score = 1000;
+		int luffy = 3000;
+		System.out.println("쵸파 : " + cForm2.format(score));
+		System.out.println("루피 : " + cForm2.format(luffy));
+		
+		// MessageFormat
+		/*
+			문자열을 만드는데
+				
+				이름 : 지수, 나이 : 29
+				
+				이름 : 제니, 나이 : 28
+				
+				이름 : 로제, 나이 : 27
+				
+				이름 : 리사, 나이 : 26
+		 */
+		System.out.println("######################################################");
+		MessageFormat mForm = new MessageFormat("이름 : {0}, 나이 : {1}");
+		
+		Object[] jisoo = {"지수", 29};	
+		
+		String jsoInfo = mForm.format(jisoo);
+		System.out.println(jsoInfo);
+				
+				
+		Object[][] data = {
+				{"지수", 29},	
+				{"제니", 28},	
+				{"로제", 27},	
+				{"리사", 26}	
+		};
+		String [] memb = new String[4];
+		for(int i = 0 ; i < memb.length ; i++) {
+			memb[i] = mForm.format(data[i]);
+		}
+		System.out.println("=====================================================");
+		for(String s : memb) {
+			System.out.println(s);
+		}
+		
+		
 	}
 	public static void main(String[] args) {
 		new FormatClass();
